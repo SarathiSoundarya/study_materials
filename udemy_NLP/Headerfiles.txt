@@ -1,0 +1,128 @@
+NLTK
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
+
+SESSION 1
+
+*NLTK
+'/content/drive/MyDrive/Colab Notebooks/NLP/Flutura_Udemy/NLP_Basics/owlcreek.txt'
+
+
+1)tokenizing:sentence, words  
+from nltk.tokenize import sent_tokenize, word_tokenize
+
+2)removing stopwords 
+from nltk.corpus import stopwords   set(stopwords.words('english'))
+
+3)stemming :
+ from nltk.stem import PorterStemmer  #object obj.stem(token)
+'I am a runner who runs regularly and loves running.'
+from nltk.stem import SnowballStemmer
+sn=SnowballStemmer(language='english')
+
+4)from nltk.stem import WordNetLemmatizer #object
+nltk.download('wordnet')
+
+5)from nltk import pos_tag       # [takes input an array of tokens]
+
+
+
+5)from nltk import ne_chunk  #accepts input as tags, hasattr(c,'label'), ne_chunk(tags,binary=True)
+
+
+
+*Spacy
+1)load spacy and doc
+2)doc.sents
+3) Stop Words using Spacy :nlp.Defaults.stop_words, nlp.vocab['text'].is_stop
+4)Lemmatization and pos tags:   token.pos_, token.tag_, spacy.explain
+5)ner : doc.ents, ent.label_
+using displacy.render
+
+
+
+
+*EXERCISES
+
+
+
+Exercise 1: cleaning my TEDx transcripts data using NLTK
+
+ Remove null values and blank transcripts
+Text preprocessing techniques
+#lemmatizing and tokenize
+#checking if a punctuation, checking if it is a stopword, append lowercase
+
+Header Files
+
+import nltk
+nltk.download('punkt')
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.corpus import stopwords   set(stopwords.words('english'))
+from nltk.stem import WordNetLemmatizer  wl=WordNetLemmatizer() wl.lemmatize(token)
+from nltk.stem import SnowballStemmer
+sn=SnowballStemmer(language='english')
+sn.stem(word)
+line=' '.join(line)
+word.lower()
+word.isalnum()
+word.isspace()
+
+To Download:
+ nltk.download('punkt')
+ nltk.download('wordnet')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+
+
+
+Exercise 2: Counting the number of nouns and proper nouns in fake news detection using Spacy
+
+fake news detection using Spacy by counting the number of stop words, punctuations, proper nouns and nouns, named entities
+# for each line : length of the text, stop words, punctuations, proper nouns , nouns  and NER
+
+
+
+SPACY
+nlp=spacy.load('en_core_web_sm')
+token.lemma_
+(token.text, token.pos_, token.tag_, spacy.explain(token.tag_)) 
+nlp.Defaults.stop_words
+nlp.vocab['myself'].is_stop
+
+for ent in doc.ents:
+print(ent.text, ent.label_, spacy.explain(ent.label_))
+.count
+*Header files
+df=df.dropna()
+df=df.dropna(subset=["Class","Roll","Marks"])
+
+
+
+*CLASSIFICATION Metrics:
+
+pump data: This dataset consists of pump sensors data 
+for predictive maintenance. It includes data from 52 
+sensors which monitor the status of a water pump in 
+a small area, in order to predict the failure time of the 
+pump
+
+1) Data preprocessing: Load, removing the null columns and replace the missing values with zero
+df=df.fillna(0)
+changing the machine status values
+Extracting the X and y values 
+df.iloc[:,:] and split train,test  from sklearn.model_selection import train_test_split
+
+2) scaling using MaxMinScalar() : from sklearn.preprocessing import MinMaxScaler
+create an object and perform fit_transform for this
+
+3)from sklearn.linear_model import LogisticRegression :create an obj and fit
+from sklearn.neighbors import KNeighborsClassifier : argument- n_neighbors=2
+from sklearn.ensemble import RandomForestClassifier: argument - n_estimators=150
+
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+solver='newton-cg'

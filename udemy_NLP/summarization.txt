@@ -1,0 +1,59 @@
+1)To install and import:
+
+import nltk
+nltk.download('punkt')
+!pip install pytextrank
+!python -m spacy download en_core_web_md
+import spacy
+import pytextrank
+nlp=spacy.load('en_core_web_md')
+nlp.add_pipe('textrank')
+import re
+import numpy as np
+import spacy
+!pip install sumy
+import sumy
+from sumy.summarizers.lex_rank import LexRankSummarizer
+from sumy.summarizers.text_rank import TextRankSummarizer
+from sumy.summarizers.luhn import LuhnSummarizer
+from sumy.summarizers.lsa import LsaSummarizer
+from sumy.summarizers.kl import KLSummarizer
+from sumy.summarizers.sum_basic import SumBasicSummarizer
+from sumy.summarizers.edmundson import EdmundsonSummarizer
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer
+import pandas as pd
+!pip install rouge-score
+from rouge_score import rouge_scorer
+from google.colab import drive
+drive.mount('/content/drive/')
+from nltk.tokenize import sent_tokenize
+from nltk.tokenize import word_tokenize
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+nltk.download('vader_lexicon')
+
+2)declare the global variables
+import the data and initialize
+pd.DataFrame(columns=['Domain','Reference Summary','lexrank','textrank','lsa','luhn','klsum','sumbasic'])
+
+3) data.iterrows() :iterates through the rows -> indices, rows
+preprocess the text and parse it using PlaintextParser.from_string(text,Tokenizer("english"))
+create an object and pass the parsed.document, number of sentences for the summary
+join the summary , .columns.get_loc(''): gets the column name
+calculate the scores: 
+rouge_scorer.RougeScorer(['rougeL','rouge2'], use_stemmer=True): create an object and get the name of 
+object.score(ref sum, csum), accses the scores through score['name'][2]
+
+using edmund:
+tokenize into words, object of SentimentIntensityAnalyzer()
+ check the sa.polarity_scores(words)['compound']
+(>=0.1, positive,<=0 negative)
+sumed=EdmundsonSummarizer(cue_weight=1, key_weight=1, title_weight=0, location_weight=0), parse it and summarize.
+
+ausing spacy:
+ #remove stop words and lemmatize it
+stopwords=nlp.Defaults.stop_words
+doc1._.phrases :rank, count and text
+docprocessed._.textrank.summary(limit_phrases=15,limit_sentences=5)
+identify the sentence ids and get those sentences.
+rougelscore[['lexrank','textrank','lsa','luhn','klsum','sumbasic','edmundson','spacy']].astype('float64').idxmax(axis=1)

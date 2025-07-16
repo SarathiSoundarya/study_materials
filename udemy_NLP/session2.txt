@@ -1,0 +1,224 @@
+*Intro to Gensim
+
+
+!pip install gensim
+import gensim
+from gensim.models import Word2Vec
+
+paragraph= """I have three visions for India. In 3000 years of our history, people from all over
+               the world have come and invaded us, captured our lands, conquered our minds.
+               From Alexander onwards, the Greeks, the Turks, the Moguls, the Portuguese, the British,
+               the French, the Dutch, all of them came and looted us, took over what was ours.
+               Yet we have not done this to any other nation. We have not conquered anyone.
+               We have not grabbed their land, their culture,
+               their history and tried to enforce our way of life on them.
+               Why? Because we respect the freedom of others.That is why my
+               first vision is that of freedom. I believe that India got its first vision of
+               this in 1857, when we started the War of Independence. It is this freedom that
+               we must protect and nurture and build on. If we are not free, no one will respect us.
+               My second vision for India’s development. For fifty years we have been a developing nation.
+               It is time we see ourselves as a developed nation. We are among the top 5 nations of the world
+               in terms of GDP. We have a 10 percent growth rate in most areas. Our poverty levels are falling.
+               Our achievements are being globally recognised today. Yet we lack the self-confidence to
+               see ourselves as a developed nation, self-reliant and self-assured. Isn’t this incorrect?
+               I have a third vision. India must stand up to the world. Because I believe that unless India
+               stands up to the world, no one will respect us. Only strength respects strength. We must be
+               strong not only as a military power but also as an economic power. Both must go hand-in-hand.
+               My good fortune was to have worked with three great minds. Dr. Vikram Sarabhai of the Dept. of
+               space, Professor Satish Dhawan, who succeeded him and Dr. Brahm Prakash, father of nuclear material.
+               I was lucky to have worked with all three of them closely and consider this the great opportunity of my life.
+               I see four milestones in my career"""
+
+	
+import nltk
+nltk.download('punkt')
+from nltk.tokenize import sent_tokenize, word_tokenize
+sentences=sent_tokenize(paragraph)
+
+from gensim.utils import simple_preprocess
+from gensim.parsing.preprocessing import remove_stopwords
+filtered=[]
+for sent in sentences:
+  s=remove_stopwords(sent) #accepts input as a full string
+  s=simple_preprocess(s,min_len=1) #default length is one  #accept full sentence as an input:This will tokenize and remove punctuations
+  print(s)
+  filtered.append(s)
+
+model=Word2Vec(filtered,min_count=1,window=5,vector_size=100,sg=1)#default is  and default vector_size=100
+
+vector=model.wv['war']
+similar=model.wv.most_similar('sarabhai', topn=6)
+similar
+
+model.wv.similarity('brahm','respect')
+
+
+from gensim.models import KeyedVectors  
+wv=KeyedVectors.load('/content/drive/MyDrive/Colab Notebooks/TASK2/wiki300glove.kv')
+wv.similarity('apple','car')
+wv.most_similar(positive=['king', 'woman'], negative=['man'], topn=5)
+
+
+
+
+
+*EXERCISE
+
+from google.colab import drive
+drive.mount('/content/drive/')
+import pandas as pd
+data=pd.read_csv('/content/drive/MyDrive/Colab Notebooks/TASK2/imdb.csv')
+data.head()
+data.isnull().sum()
+data=data.iloc[:10000,:]
+data['sentiment'].value_counts()
+
+import gensim
+import spacy 
+!python -m spacy download en_core_web_lg
+nlp=spacy.load('en_core_web_lg')
+from gensim.parsing.preprocessing import remove_stopwords, STOPWORDS
+
+from gensim.utils import simple_preprocess
+
+#no need to tokenize sentence
+texts=data['review']
+filtered=[]
+for sent in texts:
+  sent=remove_stopwords(sent) #returns a string removed with stopwords
+  sent=simple_preprocess(sent)
+  sent=' '.join(sent)
+  doc=nlp(sent,disable=["tagger","ner","parser","attribute_ruler"])
+  sent=[token.lemma_ for token in doc]
+  filtered.append(sent)
+
+
+#USING GENSIM PRETRAINED MODEL
+
+import gensim.downloader as api
+print(gensim.downloader.info()['models'].keys())
+wv=api.load('') 
+wv.save(' .kv')
+
+
+from gensim.models import KeyedVectors  
+genmodel=KeyedVectors.load('/content/drive/MyDrive/Colab Notebooks/TASK2/wiki300glove.kv')
+
+#for each sentence add the vectors
+X=[]
+y=data['sentiment']
+#find the vector representation for each of the sentence
+for sent in filtered:
+  vectsum=np.zeros(300)
+  print(len(sent))
+  num=0
+  for word in sent:
+    if word in genmodel.key_to_index  :
+      vectsum+=genmodel[word]
+      num+=1
+  vectsum/=num
+  X.append(vectsum)
+X=np.array(X)
+
+from sklearn.model_selection import train_test_split
+Xtrain,Xtest,ytrain,ytest=train_test_split(X,y,test_size=0.33,random_state=42)
+from sklearn.neighbors import KNeighborsClassifier
+knngen=KNeighborsClassifier(n_neighbors=2)
+knngen.fit(Xtrain,ytrain)
+predictions=knngen.predict(Xtest)
+
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+print(accuracy_score(ytest,predictions))
+print(confusion_matrix(ytest,predictions))
+
+
+
+
+#USING SKIPGRAM MODEL
+
+import gensim
+from gensim.models import Word2Vec
+model=Word2Vec(filtered,min_count=1,window=5,vector_size=300,sg=1)
+X=[]
+for i,sent in enumerate(filtered):
+  vectsum=np.zeros(300)
+  num=0
+  print(i)
+  for token in sent:
+    if token in model.wv.key_to_index:
+      vectsum+=model.wv[token]
+      num+=1
+  vectsum/=num
+  X.append(vectsum)
+
+from sklearn.model_selection import train_test_split
+Xtrain,Xtest,ytrain,ytest=train_test_split(X,y,test_size=0.33,random_state=42)
+from sklearn.neighbors import KNeighborsClassifier
+knngenp=KNeighborsClassifier(n_neighbors=2)
+knngenp.fit(Xtrain,ytrain)
+predictions=knngenp.predict(Xtest)
+
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+print(accuracy_score(ytest,predictions))
+print(confusion_matrix(ytest,predictions))
+
+#USING SPACY
+import spacy
+nlp=spacy.load('en_core_web_lg')
+nlp.pipeline
+Xsp=[]
+for sent in filtered:
+  s=nlp(' '.join(sent),disable=['tagger','parser','attribute_ruler','lemmatizer','ner'])
+  vectsum=np.zeros(300)
+  num=0
+  for token in s:
+    if token.has_vector:
+      vectsum+=token.vector
+      num+=1
+  vectsum/=num
+  Xsp.append(vectsum)
+
+from sklearn.model_selection import train_test_split
+Xsptrain,Xsptest,ytrain,ytest=train_test_split(Xsp,y,test_size=0.33,random_state=42)
+from sklearn.neighbors import KNeighborsClassifier
+knnsp=KNeighborsClassifier(n_neighbors=2)
+knnsp.fit(Xsptrain,ytrain)
+predictions=knnsp.predict(Xsptest)
+print(accuracy_score(ytest,predictions))
+print(confusion_matrix(ytest,predictions))
+
+
+#USING COUNTVECTORIZER
+from sklearn.feature_extraction.text import CountVectorizer
+count_vect=CountVectorizer()
+# filtered has all the reviews
+cf=[]
+for f in filtered:
+  cf.append(' '.join(f))
+print(len(cf))
+Xc=count_vect.fit_transform(cf)  #directly supply the message
+Xctrain,Xctest,ytrain,ytest=train_test_split(Xc,y,test_size=0.33,random_state=42)
+from sklearn.neighbors import KNeighborsClassifier
+knncv=KNeighborsClassifier(n_neighbors=2)
+knncv.fit(Xctrain,ytrain)
+predictions=knncv.predict(Xctest)
+print(accuracy_score(ytest,predictions))
+print(confusion_matrix(ytest,predictions))
+
+#USING TFIDFVECTORIZER
+from sklearn.feature_extraction.text import TfidfTransformer
+tdidf_vect=TfidfTransformer()
+# filtered has all the reviews
+
+Xidf=count_vect.fit_transform(cf)
+
+Xidtrain,Xidtest,ytrain,ytest=train_test_split(Xidf,y,test_size=0.33,random_state=42)
+from sklearn.neighbors import KNeighborsClassifier
+knnidf=KNeighborsClassifier(n_neighbors=2)
+knnidf.fit(Xidtrain,ytrain)
+predictions=knnidf.predict(Xidtest)
+print(accuracy_score(ytest,predictions))
+print(confusion_matrix(ytest,predictions))
+
+
+#USING TFIDF+ SKIPGRAM MODEL FOR THIS TEXT

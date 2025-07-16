@@ -1,0 +1,117 @@
+Text Classification
+
+
+* WORD2VEC using Gensim Introduction
+
+1)import gensim
+from gensim.models import Word2Vec
+
+text:
+"""I have three visions for India. In 3000 years of our history, people from all over
+               the world have come and invaded us, captured our lands, conquered our minds.
+               From Alexander onwards, the Greeks, the Turks, the Moguls, the Portuguese, the British,
+               the French, the Dutch, all of them came and looted us, took over what was ours.
+               Yet we have not done this to any other nation. We have not conquered anyone.
+               We have not grabbed their land, their culture,
+               their history and tried to enforce our way of life on them.
+               Why? Because we respect the freedom of others.That is why my
+               first vision is that of freedom. I believe that India got its first vision of
+               this in 1857, when we started the War of Independence. It is this freedom that
+               we must protect and nurture and build on. If we are not free, no one will respect us.
+               My second vision for India’s development. For fifty years we have been a developing nation.
+               It is time we see ourselves as a developed nation. We are among the top 5 nations of the world
+               in terms of GDP. We have a 10 percent growth rate in most areas. Our poverty levels are falling.
+               Our achievements are being globally recognised today. Yet we lack the self-confidence to
+               see ourselves as a developed nation, self-reliant and self-assured. Isn’t this incorrect?
+               I have a third vision. India must stand up to the world. Because I believe that unless India
+               stands up to the world, no one will respect us. Only strength respects strength. We must be
+               strong not only as a military power but also as an economic power. Both must go hand-in-hand.
+               My good fortune was to have worked with three great minds. Dr. Vikram Sarabhai of the Dept. of
+               space, Professor Satish Dhawan, who succeeded him and Dr. Brahm Prakash, father of nuclear material.
+               I was lucky to have worked with all three of them closely and consider this the great opportunity of my life.
+               I see four milestones in my career"""
+
+nltk.download('punkt')
+
+2)Tokenize the sentences
+
+from nltk.tokenize import sent_tokenize, word_tokenize 
+
+2)Removing the stopwords and preprocessing
+
+from gensim.parsing.preprocessing importtoken in genmo remove_stopwords  #remove_stopwords(sent)
+from gensim.utils import simple_preprocess #preprocessing removes the punctuations and lower cases word
+
+
+
+3) Training our word to vec model
+model=Word2Vec(filtered,min_count=1,window=5,vector_size=100,sg=1)#default is  and default vector_size=100
+model.wv['war']
+model.wv.most_similar('sarabhai', topn=6)
+
+
+pretrained:
+
+import gensim.downloader as api
+print(gensim.downloader.info()['models'].keys())
+wv=api.load('') 
+wv.save(' .kv')
+
+from gensim.models import KeyedVectors  :load with .load
+
+
+
+*EXERCISE : Classification imdb sentiment with 1)Word2Vec using Gensim(pretrained & skipgram) 2)W2V using Spacy 3)CountVectorizer 4)TfidfVectorizer 5) W2V using Gemsim 6)Word2Vec+Tfidf
+
+1) Import the imdb dataset and extract the first 10000 samples from it. check for null values and value counts
+
+
+#best practices:Tokenize into sentences using nltk,removing stop words and punctuations using Gensim, Lemmatizing using Spacy
+
+import spacy 
+!python -m spacy download en_core_web_lg
+nlp=spacy.load('en_core_web_lg')
+
+from gensim.parsing.preprocessing importtoken in genmo remove_stopwords  #remove_stopwords(sent)
+from gensim.utils import simple_preprocess    #simple_preprocess(s,min_len=1): input is a string/sentence and o/p is a array of processed strings
+
+DISABLING OTHER PROCESSES IN SPACY  ["tagger","ner","parser","attribute_ruler"]
+
+
+2) Word2Vec using Gensim(pretrained)
+
+from gensim.models import KeyedVectors 
+genmodel= _.load('')
+
+X=[]
+Calculate the average of each of the sentence by taking the average of the vector representains of all the words in each sentence
+word in genmodel.key_to_index
+genmodel[word]
+
+from sklearn.model_selection import train_test_split
+Xtrain,Xtest,ytrain,ytest=train_test_split(X,y,test_size=0.33,random_state=42)
+from sklearn.neighbors import KNeighborsClassifier :arg (n_neighbors=2)
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+3)Word2Vec using Skipgram
+from gensim.models import Word2Vec
+model=Word2Vec(filtered,min_count=1,window=5,vector_size=300,sg=1)
+model.wv.key_to_index
+model.wv[token]
+
+4)With spacy
+join the sentences in filtered and check for the tokens has_vector=TRu
+DISABLING OTHER PROCESSES IN SPACY  ["tagger","ner","parser","attribute_ruler"]
+
+5)Using CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
+#create an object of it and perform fit_transform operation to the input
+#input:an array of sentences
+
+6)Using TFIDF Vectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+#create an object of it and perform fit_transform operation to the input
+#input is the count vectorizer matrix
+
+7)Using IDF, W2V together
+
