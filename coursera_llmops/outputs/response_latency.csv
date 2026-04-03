@@ -1,0 +1,22 @@
+label,question,latency,prompt_tokens,completion_tokens,total_tokens,estimated_cost,answer
+medium reasoning,Explain the difference between concurrency and parallelism in 2-3 bullets.,1.2915724999984377,46,73,119,5.069999999999999e-05,"- **Concurrency** refers to the ability of a system to handle multiple tasks at the same time, allowing for overlapping execution but not necessarily simultaneous execution.
+- **Parallelism** involves executing multiple tasks simultaneously, utilizing multiple processors or cores to perform computations at the same time.
+- Concurrency is about structure and design, while parallelism is about execution and performance."
+instruction rewrite,"Rewrite the following instruction to be more clear and concise: 'Can you please provide me with a list of the top 5 most popular programming languages in 2024, along with a brief description of each language and its primary use cases?'",1.4543290000001434,79,28,107,2.865e-05,"Please provide a list of the top 5 programming languages in 2024, including a brief description and primary use cases for each."
+short factual,What is the capital of France?,1.7948250999979791,38,8,46,1.05e-05,The capital of France is Paris.
+Structured output,Return a 3 item JSON array of best practices for python doctring.,2.079415699998208,46,123,169,8.07e-05,"```json
+[
+    {
+        ""best_practice"": ""Use triple quotes for docstrings."",
+        ""description"": ""Always use triple double quotes (\""\""\"") for multi-line docstrings.""
+    },
+    {
+        ""best_practice"": ""Include a summary line."",
+        ""description"": ""Start with a brief summary of the function's purpose, followed by more detailed information if necessary.""
+    },
+    {
+        ""best_practice"": ""Document parameters and return values."",
+        ""description"": ""Clearly describe each parameter and the return value, including types and any exceptions raised.""
+    }
+]
+```"

@@ -1,0 +1,6 @@
+2026-04-03 10:24:40,011 INFO    MainThread:19084 [wandb_init.py:setup_run_log_directory():717] Logging user logs to c:\Users\Soundarya\OneDrive\github\study_materials\coursera_llmops\wandb\run-20260403_102440-mg6f8n62\logs\debug.log
+2026-04-03 10:24:40,012 INFO    MainThread:19084 [wandb_init.py:setup_run_log_directory():718] Logging internal logs to c:\Users\Soundarya\OneDrive\github\study_materials\coursera_llmops\wandb\run-20260403_102440-mg6f8n62\logs\debug-internal.log
+2026-04-03 10:24:40,012 INFO    MainThread:19084 [wandb_init.py:init():844] calling init triggers
+2026-04-03 10:24:40,012 INFO    MainThread:19084 [wandb_init.py:init():849] wandb.init called with sweep_config: {}
+config: {'_wandb': {}}
+2026-04-03 10:24:40,012 INFO    MainThread:19084 [wandb_init.py:init():892] starting backend

@@ -1,0 +1,10 @@
+python -m venv venv
+.\venv\Scripts\activate
+pip install ipykernel jupyter
+python -m ipykernel install --user --name=venv --display-name "genai"
+
+
+
+#learnt until now, Lnagchain expression langchain, runnables(sequential, branch etc etc)async calls using sephamore, prompt caching using in memo and sqlite, trace with langsmith and weights, biases  
+
+to_further_explore: semantic caching

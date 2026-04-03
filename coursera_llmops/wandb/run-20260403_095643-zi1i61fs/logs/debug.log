@@ -1,0 +1,10 @@
+2026-04-03 09:56:43,872 INFO    MainThread:19084 [wandb_setup.py:_flush():81] Current SDK version is 0.25.1
+2026-04-03 09:56:43,878 INFO    MainThread:19084 [wandb_setup.py:_flush():81] Configure stats pid to 19084
+2026-04-03 09:56:43,878 INFO    MainThread:19084 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2026-04-03 09:56:43,879 INFO    MainThread:19084 [wandb_init.py:setup_run_log_directory():717] Logging user logs to c:\Users\Soundarya\OneDrive\github\study_materials\coursera_llmops\wandb\run-20260403_095643-zi1i61fs\logs\debug.log
+2026-04-03 09:56:43,883 INFO    MainThread:19084 [wandb_init.py:setup_run_log_directory():718] Logging internal logs to c:\Users\Soundarya\OneDrive\github\study_materials\coursera_llmops\wandb\run-20260403_095643-zi1i61fs\logs\debug-internal.log
+2026-04-03 09:56:43,886 INFO    MainThread:19084 [wandb_init.py:monkeypatch_ipython():636] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x00000200669AC980>
+2026-04-03 09:56:43,886 INFO    MainThread:19084 [wandb_init.py:init():844] calling init triggers
+2026-04-03 09:56:43,887 INFO    MainThread:19084 [wandb_init.py:init():849] wandb.init called with sweep_config: {}
+config: {'model': 'gpt4o', 'temperature': 0.2, 'langsmith_project': 'exp', 'langsmith_run': 'run1', 'prompt_system': 'You are a concise assistant. Keep answers short, correct and well-formatted.', '_wandb': {}}
+2026-04-03 09:56:43,887 INFO    MainThread:19084 [wandb_init.py:init():892] starting backend
