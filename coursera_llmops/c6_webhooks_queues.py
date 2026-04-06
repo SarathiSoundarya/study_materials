@@ -172,6 +172,7 @@ async def health():
 
 
 
+#to run this script, use the command: 'uvicorn c6_webhooks_queues:app --reload' in the terminal. This will start the FastAPI server and you can test the webhook endpoint by sending POST requests to http://localhost:8000/webhook with the appropriate payload and signature.
 # Client
 #   ↓
 # Webhook endpoint

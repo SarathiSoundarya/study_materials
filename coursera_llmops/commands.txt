@@ -8,3 +8,10 @@ python -m ipykernel install --user --name=venv --display-name "genai"
 #learnt until now, Lnagchain expression langchain, runnables(sequential, branch etc etc)async calls using sephamore, prompt caching using in memo and sqlite, trace with langsmith and weights, biases  
 
 to_further_explore: semantic caching
+1) docker build -t fastapi-app .
+# docker port: 80 and local machine port 6000
+2) docker run -d -p 80:6000 --env-file .env fastapi-app
+access the endpoints of container
+3) docker ps -a #lists all the containers
+4) docker logs 874207ee043e (or logs -f)
+5) docker rm 874207ee043e
